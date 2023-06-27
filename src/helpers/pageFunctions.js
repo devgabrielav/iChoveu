@@ -1,5 +1,4 @@
 import { searchCities, getWeatherByCity } from './weatherAPI';
-
 /**
  * Cria um elemento HTML com as informações passadas
  */
@@ -24,9 +23,17 @@ function createForecast(forecast) {
   const dateElement = createElement('p', 'forecast-weekday', weekdayName);
 
   const maxElement = createElement('span', 'forecast-temp max', 'max');
-  const maxTempElement = createElement('span', 'forecast-temp max', `${maxTemp}º`);
+  const maxTempElement = createElement(
+    'span',
+    'forecast-temp max',
+    `${maxTemp}º`,
+  );
   const minElement = createElement('span', 'forecast-temp min', 'min');
-  const minTempElement = createElement('span', 'forecast-temp min', `${minTemp}º`);
+  const minTempElement = createElement(
+    'span',
+    'forecast-temp min',
+    `${minTemp}º`,
+  );
   const tempContainer = createElement('div', 'forecast-temp-container');
   tempContainer.appendChild(maxElement);
   tempContainer.appendChild(minElement);
@@ -77,7 +84,7 @@ export function showForecast(forecastList) {
  * Recebe um objeto com as informações de uma cidade e retorna um elemento HTML
  */
 export function createCityElement(cityInfo) {
-  const { name, country, temp, condition, icon /* , url */ } = cityInfo;
+  const { name, country, temp, condition, icon /* url */ } = cityInfo;
 
   const cityElement = createElement('li', 'city');
 
@@ -117,7 +124,20 @@ export async function handleSearch(event) {
   const searchInput = document.getElementById('search-input');
   const searchValue = searchInput.value;
   const cities = await searchCities(searchValue);
-  Promise.all(cities).then(async (city) => {
-    await getWeatherByCity(city);
+  const citiesFetched = cities.map((city) => city);
+  Promise.all(citiesFetched).then((citiess) => {
+    const lista = document.querySelector('#cities');
+    citiess.map(async (city) => {
+      const getWeather = await getWeatherByCity(city.url);
+      const display = {
+        name: city.name,
+        country: city.country,
+        temp: getWeather.temp,
+        condition: getWeather.condition,
+        icon: getWeather.icon,
+        url: city.url,
+      };
+      lista.appendChild(createCityElement(display));
+    });
   });
 }

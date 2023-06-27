@@ -9,15 +9,11 @@ export const searchCities = async (term) => {
 };
 
 export const getWeatherByCity = async (cityURL) => {
-  const result = await cityURL;
-  const mapped = result.map((city) => city.url);
-  mapped.map(async (resultado) => {
-    const response = await fetch(`http://api.weatherapi.com/v1/current.json?lang=pt&key=${token}&q=${resultado}`);
-    const data = await response.json();
-    return {
-      temp: data.current.temp_c,
-      condition: data.current.condition.text,
-      icon: `${data.current.condition.icon}`,
-    };
-  });
+  const response = await fetch(`http://api.weatherapi.com/v1/current.json?lang=pt&key=${token}&q=${cityURL}`);
+  const data = await response.json();
+  return {
+    temp: data.current.temp_c,
+    condition: data.current.condition.text,
+    icon: `${data.current.condition.icon}`,
+  };
 };
