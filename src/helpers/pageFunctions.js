@@ -87,27 +87,8 @@ export function showForecast(forecastList) {
  */
 export async function createCityElement(cityInfo) {
   const { name, country, temp, condition, icon, url } = cityInfo;
-  const manyDays = 7;
-  const newButton = document.createElement('button');
-  newButton.setAttribute('id', 'seeForecast');
-  newButton.innerText = 'Ver previsão';
-  const forecastFetch = await fetch(`http://api.weatherapi.com/v1/forecast.json?lang=pt&key=${token}&q=${url}&days=${manyDays}`);
-  const data = await forecastFetch.json();
-  const mappedData = data.forecast.forecastday;
-  newButton.addEventListener('click', () => {
-    const displayForecast = [];
-    mappedData.forEach((days) => {
-      displayForecast.push({
-        date: days.date,
-        maxTemp: days.day.maxtemp_c,
-        minTemp: days.day.mintemp_c,
-        condition: days.day.condition.text,
-        icon: days.day.condition.icon,
-      });
-    });
-    showForecast(displayForecast);
-  });
-
+  const manyDays = 3;
+  
   const cityElement = createElement('li', 'city');
 
   const headingElement = createElement('div', 'city-heading');
@@ -132,7 +113,29 @@ export async function createCityElement(cityInfo) {
 
   cityElement.appendChild(headingElement);
   cityElement.appendChild(infoContainer);
+
+  const newButton = document.createElement('button');
+  newButton.setAttribute('id', 'seeForecast');
+  newButton.innerText = 'Ver previsão';
+  const forecastFetch = await fetch(`http://api.weatherapi.com/v1/forecast.json?lang=pt&key=${token}&q=${url}&days=${manyDays}`);
+  const data = await forecastFetch.json();
+  const mappedData = data.forecast.forecastday;
+  newButton.addEventListener('click', () => {
+    const displayForecast = [];
+    mappedData.forEach((days) => {
+      displayForecast.push({
+        date: days.date,
+        maxTemp: days.day.maxtemp_c,
+        minTemp: days.day.mintemp_c,
+        condition: days.day.condition.text,
+        icon: days.day.condition.icon,
+      });
+    });
+    showForecast(displayForecast);
+  });
+
   cityElement.appendChild(newButton);
+  
   return cityElement;
 }
 
