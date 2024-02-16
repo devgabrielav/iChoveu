@@ -1,4 +1,3 @@
-// Remova os comentários a medida que for implementando as funções
 const token = import.meta.env.VITE_TOKEN;
 
 export const searchCities = async (term) => {
