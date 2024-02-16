@@ -7,7 +7,7 @@ On this application my goal is to fetch from a API, information about the weathe
 
 ## Used technologies
 
-Back-end:
+Front-end:
 > Developed using: Javascript, CSS, Vite and ESLint for more organized code.
 
 ## Installing Dependencies
