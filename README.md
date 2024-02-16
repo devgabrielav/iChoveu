@@ -21,7 +21,7 @@ npm install
 
 ## Before running the application
 
-*To fetch the API data, you will need to create an account on this website [WeatherAPI](https://www.weatherapi.com/signup.aspx) , and get your token which is located here:
+*To fetch the API data, you will need to create an account on this website <a src="https://www.weatherapi.com/signup.aspx" target="_blank">WeatherAPI</a> , and get your token which is located here:
   <img width="50%" src="/src/imgs/weatherapi.png" />
 
 
